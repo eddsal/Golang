@@ -17,7 +17,13 @@ func homePage(w http.ResponseWriter, r *http.Request){
 
 
 func writeTofile(data string){
+	
+	if _, err := os.Stat("data.txt"); os.IsNotExist(err) {
+		os.OpenFile("data.txt", os.O_RDONLY|os.O_CREATE, 0666)
+	}	
 	file, err := os.OpenFile("data.txt", os.O_WRONLY|os.O_APPEND, 0644)
+
+
 	fileContent := ""
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
